@@ -2,20 +2,36 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/security
-http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <security:http auto-config="true" use-expressions="true">
-        <security:intercept-url pattern="/hello" access="hasRole('ROLE_MEMBER')"/>
+        <security:intercept-url pattern="/" access="permitAll"/>
+        <security:intercept-url pattern="/common" access="hasRole('ROLE_MEMBER')"/>
         <security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 
+
+        <!--Enforce https-->
         <security:intercept-url pattern="/*" requires-channel="https"/>
         <!--<security:intercept-url pattern="/j_spring_security_check" requires-channel="https"/>-->
-        <security:form-login login-page="/custom_login" username-parameter="user_param"
-                             password-parameter="pass_param"/>
 
-        <!--Session-->
+        <security:form-login login-page="/custom_login"
+                             authentication-failure-url="/cutom_login?error=true"
+                             default-target-url="/common"
+                             username-parameter="user_param"
+                             password-parameter="pass_param"/>
+        <security:logout
+            invalidate-session="true"
+            logout-success-url="/custom_login"
+            logout-url="/logout"/>
+
+        <!--Recaptcha service-->
+        <security:custom-filter ref="captchaCaptureFilter" before="FORM_LOGIN_FILTER"/>
+        <security:custom-filter ref="captchaVerifierFilter" after="FORM_LOGIN_FILTER"/>
+
+        <!--Limit Session to 1-->
         <security:session-management>
             <security:concurrency-control max-sessions="1"/>
         </security:session-management>
@@ -31,4 +47,21 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd http://ww
                 />
         </security:authentication-provider>
     </security:authentication-manager>
+
+
+
+    <!-- Beans-->
+    <!-- For capturing CAPTCHA fields -->
+    <bean id="captchaCaptureFilter" class="live.abhinav.filter.CaptchaCaptureFilter" />
+
+    <!-- For verifying CAPTCHA fields -->
+    <!-- Private key is assigned by the reCATPCHA service -->
+    <bean id="captchaVerifierFilter" class="live.abhinav.filter.CaptchaVerifierFilter"
+          p:useProxy="false"
+          p:proxyPort=""
+          p:proxyHost=""
+          p:failureUrl="/custom_login?error=true"
+          p:captchaCaptureFilter-ref="captchaCaptureFilter"
+          p:privateKey="6LfGGQoTAAAAAFt8xbCLmgSQUhsCcXh6kFJtG6fk"/>
+
 </beans>
