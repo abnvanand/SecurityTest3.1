@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - test@localhost" uuid="921e7a14-991b-468c-8a32-3ffbd9beed4f">
+    <database-info product="MySQL" version="5.6.24" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="test"/>
+    <table name="user_roles" schema="" catalog="test" type="TABLE">
+      <column name="user_role_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="ROLE" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="user_role_id"/>
+      <foreign-key name="fk_username" columns="username" ref-table="users" ref-schema="" ref-catalog="test" ref-columns="username" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="uni_username_role" unique="true" columns="ROLE,username"/>
+      <index name="fk_username_idx" unique="false" columns="username"/>
+    </table>
+    <table name="users" schema="" catalog="test" type="TABLE">
+      <column name="username" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="enabled" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <primary-key name="PRIMARY" columns="username"/>
+      <exported-key name="fk_username" table="user_roles" schema="" catalog="test" columns="username"/>
+    </table>
+  </data-source>
+  <data-source name="MySQL - xebia@localhost" uuid="bb6f8e31-e836-40e2-8441-5fc5f72a0a41">
+    <database-info product="MySQL" version="5.6.24" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="xebia"/>
+    <table name="authorities" schema="" catalog="xebia" type="TABLE">
+      <column name="USERNAME" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="AUTHORITY" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="USERNAME"/>
+      <foreign-key name="FK_AUTHORITIES_USERS" columns="USERNAME" ref-table="users" ref-schema="" ref-catalog="xebia" ref-columns="USERNAME" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="group_authorities" schema="" catalog="xebia" type="TABLE">
+      <column name="group_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="authority" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+    </table>
+    <table name="group_members" schema="" catalog="xebia" type="TABLE">
+      <column name="group_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="username" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+    </table>
+    <table name="groups" schema="" catalog="xebia" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="GROUP_NAME" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="users" schema="" catalog="xebia" type="TABLE">
+      <column name="USERNAME" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="PASSWORD" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="ENABLED" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="USERNAME"/>
+      <exported-key name="FK_AUTHORITIES_USERS" table="authorities" schema="" catalog="xebia" columns="USERNAME"/>
+    </table>
+  </data-source>
+</component>
