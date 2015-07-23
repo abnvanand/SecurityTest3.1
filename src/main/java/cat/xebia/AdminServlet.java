@@ -1,4 +1,4 @@
-package live.abhinav; /**
+package cat.xebia; /**
  * Created by abhin on 7/20/2015.
  */
 import javax.servlet.annotation.WebServlet;

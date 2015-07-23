@@ -1,4 +1,4 @@
-package live.abhinav;
+package cat.xebia;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;

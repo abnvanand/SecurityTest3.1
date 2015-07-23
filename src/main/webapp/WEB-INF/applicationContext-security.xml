@@ -52,11 +52,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd http://ww
 
     <!-- Beans-->
     <!-- For capturing CAPTCHA fields -->
-    <bean id="captchaCaptureFilter" class="live.abhinav.filter.CaptchaCaptureFilter" />
+    <bean id="captchaCaptureFilter" class="cat.xebia.filter.CaptchaCaptureFilter" />
 
     <!-- For verifying CAPTCHA fields -->
     <!-- Private key is assigned by the reCATPCHA service -->
-    <bean id="captchaVerifierFilter" class="live.abhinav.filter.CaptchaVerifierFilter"
+    <bean id="captchaVerifierFilter" class="cat.xebia.filter.CaptchaVerifierFilter"
           p:useProxy="false"
           p:proxyPort=""
           p:proxyHost=""

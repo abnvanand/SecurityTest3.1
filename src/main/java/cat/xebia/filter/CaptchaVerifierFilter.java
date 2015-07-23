@@ -1,4 +1,4 @@
-package live.abhinav.filter;
+package cat.xebia.filter;
 
 /**
  * Created by abhin on 7/21/2015.

@@ -9,8 +9,8 @@
     <meta charset="UTF-8">
     <meta name="author" content="Deepankar Agrawal">
     <link href="<c:url value='/resources/css/materialize.min.css' />" rel="stylesheet">
-    <script src="js/jquery-2.1.1.min.js"></script>
-    <script src="js/materialize.min.js"></script>
+    <script src="<c:url value='/resources/js/jquery-2.1.1.min.js' />"></script>
+    <script src="<c:url value='/resources/js/materialize.min.js' />"></script>
     <link id="page_favicon" href="favicon.ico" rel="icon" type="image/x-icon">
     <title>Registration Page</title>
     <style>
@@ -66,10 +66,7 @@
                 <div class="col m1 s1"></div>
                 <div class="col m1 s1"></div>
             </div>
-            <%
-                ReCaptcha c = ReCaptchaFactory.newSecureReCaptcha("6LfGGQoTAAAAAA_yx6KG83-15mntFYoUDVbSEXDd", "6LfGGQoTAAAAAFt8xbCLmgSQUhsCcXh6kFJtG6fk", false);
-                out.print(c.createRecaptchaHtml(null, null));
-            %>
+
             <div class="row">
                 <div class="input-field col m1 s1"></div>
                 <div class="input-field col m10 s10 white-text">
@@ -91,6 +88,10 @@
             </div>
             <div class="row">
                 <div class="col m12 s12" align="center">
+                    <%
+                        ReCaptcha c = ReCaptchaFactory.newSecureReCaptcha("6LfGGQoTAAAAAA_yx6KG83-15mntFYoUDVbSEXDd", "6LfGGQoTAAAAAFt8xbCLmgSQUhsCcXh6kFJtG6fk", false);
+                        out.print(c.createRecaptchaHtml(null, null));
+                    %>
                     <button class="btn waves-effect waves-light pink" type="submit">Login
                         <i class="mdi-content-send right"></i>
                     </button>
